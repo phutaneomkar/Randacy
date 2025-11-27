@@ -1,0 +1,593 @@
+@use "sass:color";
+
+// ============================================
+// Variables
+// ============================================
+$primary-green: #00945f;
+$secondary-green: #ebf7f5;
+$third-green: #29a579;
+$white: #ffffff;
+$link: #759b24;
+$orange: #e97300;
+$text-dark: #888888;
+$text-light: #888888;
+$border-color: #e0e0e0;
+$footer-text: #666666;
+
+// Breakpoints
+$mobile: 768px;
+$tablet: 1024px;
+
+// ============================================
+// Mixins
+// ============================================
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == mobile {
+    @media screen and (max-width: $mobile) {
+      @content;
+    }
+  } @else if $breakpoint == tablet {
+    @media screen and (max-width: $tablet) {
+      @content;
+    }
+  }
+}
+
+// ============================================
+// Reset & Base Styles
+// ============================================
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  color: $text-dark;
+  line-height: 1.6;
+  font-size: 16px;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+// ============================================
+// Layout Components
+// ============================================
+.container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+// ============================================
+// Header
+// ============================================
+.header {
+  padding: 40px 0;
+  background-color: $white;
+  border-bottom: 1px solid $border-color;
+
+  .logo {
+    height: 40px;
+    width: auto;
+  }
+}
+
+// ============================================
+// Hero Section
+// ============================================
+.hero {
+  position: relative;
+  background-color: $white;
+
+  .hero-image {
+    width: 100%;
+    height: 600px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    picture {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+    }
+  }
+
+  .container {
+    text-align: center;
+    padding: 60px 40px;
+  }
+
+  .hero-title {
+    font-size: 32px;
+    font-weight: 400;
+    color: $primary-green;
+    margin-bottom: 15px;
+    position: relative;
+    display: inline-block;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background-color: $primary-green;
+    }
+  }
+
+  .hero-text {
+    font-size: 16px;
+    color: $text-dark;
+    width: 100%;
+    margin: 30px auto;
+    text-align: left;
+    line-height: 1.8;
+  }
+
+  .cta-button {
+    display: inline-block;
+    background-color: $orange;
+    color: $white;
+    padding: 15px 40px;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 400;
+    
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: color.adjust($orange, $lightness: -10%);
+    }
+  }
+
+  @include respond-to(mobile) {
+    .hero-image {
+      height: 300px;
+    }
+
+    .hero-title {
+      font-size: 28px;
+    }
+
+    .hero-text {
+      font-size: 16px;
+    }
+    .container {
+      padding: 40px 20px;
+    }
+  }
+}
+
+// ============================================
+// Advantages Section
+// ============================================
+.advantages {
+  padding: 0px 0px 60px;
+  background-color: $white;
+
+  .link {
+    color: $link;
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .section-title {
+    font-size: 32px;
+    font-weight: 400;
+    color: $primary-green;
+    text-align: center;
+    // margin-bottom: 50px;
+    position: relative;
+    display: inline-block;
+    width: 100%;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background-color: $primary-green;
+    }
+  }
+
+  .advantages-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+    margin-top: 60px;
+    position: relative;
+
+    @include respond-to(tablet) {
+      gap: 30px;
+    }
+
+    @include respond-to(mobile) {
+      grid-template-columns: 1fr;
+      gap: 30px;
+      margin-top: 40px;
+    }
+  }
+
+  .advantage-card {
+    position: relative;
+
+    // Vertical line in two parts - on right column items (top and bottom)
+    &:nth-child(2),
+    &:nth-child(4) {
+      &::before {
+        content: '';
+        position: absolute;
+        left: -25px;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background-color: $border-color;
+
+        @include respond-to(tablet) {
+          left: -15px;
+        }
+
+        @include respond-to(mobile) {
+          display: none;
+        }
+      }
+    }
+
+    // Horizontal line between rows - only on tablet and mobile
+    // Between Unique products (1) and Exceptional support (2)
+    &:nth-child(2) {
+      &::after {
+        content: '';
+        position: absolute;
+        top: -20px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        width: 100%;
+        background-color: $border-color;
+        border: none;
+        margin: 0;
+        padding: 0;
+        display: none;
+        opacity: 1;
+
+        @include respond-to(tablet) {
+          display: block;
+          top: -15px;
+        }
+
+        @include respond-to(mobile) {
+          display: block;
+          top: -15px;
+        }
+      }
+    }
+
+    // Between Closing on-time (3) and You'll have a voice (4)
+    &:nth-child(n+3) {
+      &::after {
+        content: '';
+        position: absolute;
+        top: -20px;
+        left: 0;
+        right: 0;
+        height: 1.5px;
+        width: 100%;
+        background-color: $border-color;
+        border: none;
+        margin: 0;
+        padding: 0;
+        display: none;
+        opacity: 1;
+
+        @include respond-to(tablet) {
+          display: block;
+          top: -15px;
+        }
+
+        @include respond-to(mobile) {
+          display: block;
+          top: -15px;
+        }
+      }
+    }
+    .advantage-title {
+      font-size: 24px;
+      font-weight: 400;
+      color: $primary-green;
+      margin-bottom: 15px;
+
+      @include respond-to(mobile) {
+        font-size: 20px;
+      }
+    }
+
+    .advantage-text {
+      font-size: 16px;
+      color: $text-dark;
+      line-height: 1.8;
+
+      .link {
+        color: $link;
+      }
+
+      .arrow {
+        color: $link;
+        font-weight: 400;
+        font-size: 22px;
+        cursor: pointer;
+        vertical-align: middle;
+        display: inline-block;
+        line-height: 1;
+        // margin-left: 4px;
+      }
+    }
+  }
+
+  @include respond-to(mobile) {
+    padding: 0px 20px 40px;
+    .container {
+      padding: 0px 0px;
+    }
+
+    .section-title {
+      font-size: 28px;
+    }
+  }
+}
+
+// ============================================
+// Company Info Section
+// ============================================
+.company-info {
+  background-color: $white;
+
+  .company-banner {
+    background-color: $primary-green;
+    padding: 20px 20px;
+    text-align: center;
+    margin: 0px 40px;
+
+    .banner-title {
+      font-size: 28px;
+      font-weight: 400;
+      color: $white;
+
+      @include respond-to(mobile) {
+        font-size: 22px;
+      }
+    }
+  }
+
+  .company-text {
+    font-size: 16px;
+    color: $text-dark;
+    background: #ebf7f5;
+    padding: 60px 40px;
+    width: 100%;
+    margin: 0 auto;
+    line-height: 1.8;
+
+
+    @include respond-to(mobile) {
+     
+      padding: 30px 20px;
+    }
+  }
+  @include respond-to(tablet) {
+    .company-banner{
+        margin: 0px 20px;
+    }
+    .container{
+        padding: 0px 20px;
+    }
+  }
+}
+
+// ============================================
+// Testimonials Section
+// ============================================
+.testimonials {
+  padding: 60px 20px;
+  background-color: $white;
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    width: 100%;
+    margin: 0 auto;
+
+    @include respond-to(tablet) {
+      gap: 30px;
+    }
+
+    @include respond-to(mobile) {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  }
+
+  .testimonial-card {
+    text-align: center;
+    position: relative;
+    padding-top: 20px;
+
+    .testimonial-image {
+      position: relative;
+      z-index: 1;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin: 0 auto 20px;
+      border: 3px solid $border-color;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      @include respond-to(mobile) {
+        width: 120px;
+        height: 120px;
+      }
+    }
+
+    .testimonial-quote {
+      font-size: 16px;
+      color: $text-dark;
+      line-height: 1.8;
+      margin-bottom: 15px;
+      padding: 30px 50px 0px 50px;
+      font-style: italic;
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      background-image: url('assets/quote.png');
+      background-repeat: no-repeat;
+      background-position: 50px top;
+      background-size: 60px 60px;
+    }
+
+    .testimonial-author {
+      font-size: 16px;
+      color: $third-green;
+      font-weight: 400;
+      position: relative;
+      z-index: 1;
+    }
+  }
+
+  @include respond-to(mobile) {
+    padding: 40px 20px;
+  }
+}
+
+// ============================================
+// Footer
+// ============================================
+.footer {
+  background-color: $white;
+  padding: 0px 0px 25px 0px;
+
+  .footer-divider {
+    height: 2px;
+    background-color: $primary-green;
+    width: 100%;
+    margin-bottom: 30px;
+  }
+
+  .social-media {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+    margin-bottom: 25px;
+
+    .social-link {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      border-radius: 4px;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      @include respond-to(mobile) {
+        width: 35px;
+        height: 35px;
+      }
+    }
+
+    @include respond-to(mobile) {
+      gap: 8px;
+    }
+  }
+
+  .eeo-statement {
+    font-size: 12px;
+    color: $footer-text;
+    line-height: 1.6;
+    text-align: left;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 0 20px 0;
+
+    a {
+      color: $footer-text;
+      text-decoration: underline;
+
+      &:hover {
+        color: $third-green;
+      }
+    }
+
+    @include respond-to(mobile) {
+      font-size: 12px;
+    }
+  }
+
+  .footer-links {
+    text-align: left;
+    padding-top: 0;
+    border-top: none;
+
+    .footer-link {
+      color: #444444;
+      text-decoration: none;
+      font-size: 14px;
+      margin: 0;
+
+      &:hover {
+        text-decoration: underline;
+        color: $primary-green;
+      }
+    }
+
+    .separator {
+      color: $text-dark;
+      margin: 0 8px;
+    }
+  }
+  @include respond-to(tablet) {
+    .container{
+      padding: 0px 20px;
+    }
+  }
+ 
+}
